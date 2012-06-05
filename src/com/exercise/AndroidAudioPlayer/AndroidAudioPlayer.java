@@ -3,6 +3,7 @@ package com.exercise.AndroidAudioPlayer;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,7 @@ public class AndroidAudioPlayer extends Activity {
     	public void onClick(View v) {
     		
     		MidiJob tmp_obj = new MidiJob();
-    		tmp_obj.allJobs(MIDI_FILE_NAME);
+    		tmp_obj.allJobs(AndroidAudioPlayer.this, MIDI_FILE_NAME);
    			
             Toast.makeText(AndroidAudioPlayer.this, R.string.dice_rolled, Toast.LENGTH_LONG).show();
                       

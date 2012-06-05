@@ -5,21 +5,24 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 //import android.os.Bundle;
 
 public class LoadFromAltLoc extends Activity {
 	//a handle to the application's resources
-	private Resources resources; 
+	private Resources resources;
+	Context context;
 	   
-	public InputStream LoadFile(String fileName) throws IOException {
+	public InputStream LoadFile(Context context, String fileName) throws IOException {
 		// Get resources
-		resources = getResources();
+		resources = context.getResources();
 		
 		// Create a InputStream to read the file into
 		InputStream iS;
 
 		// Get the resource id from the file name
+		System.err.println("LOAD: " + fileName);
 		int rID = resources.getIdentifier("com.exercise.AndroidAudioPlayer:raw/"+fileName, null, null);
 
 		// Get the file as a stream
