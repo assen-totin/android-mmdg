@@ -1,6 +1,8 @@
 package com.exercise.AndroidAudioPlayer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import android.content.Context;
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
 import com.leff.midi.event.MidiEvent;
+import com.leff.midi.util.MidiUtil;
 //import com.leff.midi.event.NoteOff;
 //import com.leff.midi.event.NoteOn;
 //import com.leff.midi.event.meta.Tempo;
@@ -168,18 +171,83 @@ public class MidiJob {
 		//out_tracks.add(tempoTrack);
 		out_tracks.add(noteTrack);
 		
-		MidiFile out_file = new MidiFile(MidiFile.DEFAULT_RESOLUTION, out_tracks);
+		//MidiFile out_file = new MidiFile(MidiFile.DEFAULT_RESOLUTION, out_tracks);
 		// This should be default for single track:
 		//out_file.setType(0);
 		
 		// 5. Write the MIDI data to a file
-		File output = new File(waltz);
+		//FileOutputStream fout = new FileOutputStream(outFile);
+
+		// Use a copy of the MIDI library's .writeToFile because it takes
+		// a full path and file name as argument which we don't have in Android
+		FileOutputStream fos;
+		int mType = 0;
+		int mTrackCount = out_tracks.size();
+		int mResolution = 480;
+		byte[] IDENTIFIER = { 'M', 'T', 'h', 'd' };
+		
 		try {
-			out_file.writeToFile(output);
-		} 
-		catch(IOException e) {
-			System.err.println(e);
+			fos = context.openFileOutput(waltz, Context.MODE_PRIVATE);
+			try {
+				fos.write(IDENTIFIER);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				fos.write(MidiUtil.intToBytes(6, 4));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				fos.write(MidiUtil.intToBytes(mType, 2));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				fos.write(MidiUtil.intToBytes(mTrackCount, 2));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				fos.write(MidiUtil.intToBytes(mResolution, 2));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			for(MidiTrack T1 : out_tracks) {
+				try {
+					T1.writeToFile(fos);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			try {
+				fos.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				fos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
+		
+		
+	
+		//
+		
+		//File output = new File(waltz);
+		//try {
+		//	out_file.writeToFile(output);
+		//} 
+		//catch(IOException e) {
+		//	System.err.println(e);
+		//}
 
 	}
 

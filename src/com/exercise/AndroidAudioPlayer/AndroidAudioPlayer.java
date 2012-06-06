@@ -1,9 +1,9 @@
 package com.exercise.AndroidAudioPlayer;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class AndroidAudioPlayer extends Activity {
 	private MediaPlayer mediaPlayer = new MediaPlayer();
-	private static final String MIDI_FILE_NAME = new String("/sdcard/waltz.mid");
+	private final String MIDI_FILE_NAME = new String("waltz.mid");
 	
     /** Called when the activity is first created. */
     @Override
@@ -25,8 +25,7 @@ public class AndroidAudioPlayer extends Activity {
     }
 
     Button.OnClickListener buttonDiceRollClickListener = new Button.OnClickListener(){
-    	public void onClick(View v) {
-    		
+    	public void onClick(View v) {    		
     		MidiJob tmp_obj = new MidiJob();
     		tmp_obj.allJobs(AndroidAudioPlayer.this, MIDI_FILE_NAME);
    			
@@ -35,7 +34,8 @@ public class AndroidAudioPlayer extends Activity {
             mediaPlayer.reset();
             
             try {
-				mediaPlayer.setDataSource(MIDI_FILE_NAME);
+            	FileInputStream fis = openFileInput(MIDI_FILE_NAME);
+				mediaPlayer.setDataSource(fis.getFD());
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (SecurityException e) {
