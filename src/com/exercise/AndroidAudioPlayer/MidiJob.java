@@ -1,6 +1,5 @@
 package com.exercise.AndroidAudioPlayer;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,11 +13,11 @@ import android.content.Context;
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
 import com.leff.midi.event.MidiEvent;
+import com.leff.midi.event.NoteOff;
+import com.leff.midi.event.NoteOn;
 import com.leff.midi.util.MidiUtil;
-//import com.leff.midi.event.NoteOff;
-//import com.leff.midi.event.NoteOn;
-//import com.leff.midi.event.meta.Tempo;
-//import com.leff.midi.event.meta.TimeSignature;
+import com.leff.midi.event.meta.Tempo;
+import com.leff.midi.event.meta.TimeSignature;
 
 public class MidiJob {
 	Context context;
@@ -60,7 +59,7 @@ public class MidiJob {
 	/**
 	 * @param args
 	 */
-	public void allJobs(Context context, String waltz) {
+	public void allJobs(Context context, String waltz) throws IOException, FileNotFoundException {
 		Random myRandom = new Random();
 		String m[];
 		String t[];
@@ -68,19 +67,17 @@ public class MidiJob {
 		MidiTrack T;
 
 		// 1. Create some MidiTracks
-		//MidiTrack tempoTrack = new MidiTrack();
+		MidiTrack tempoTrack = new MidiTrack();
 		MidiTrack noteTrack = new MidiTrack();
 		
 		// 2. Add events to the tracks. 
 		// Track 0 is typically the tempo map
-		//TimeSignature ts = new TimeSignature();
-		//ts.setTimeSignature(4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
-		
-		//Tempo t = new Tempo();
-		//t.setBpm(120);
-		
-		//tempoTrack.insertEvent(ts);
-		//tempoTrack.insertEvent(t);
+		TimeSignature ts = new TimeSignature();
+		ts.setTimeSignature(4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
+		Tempo tempo = new Tempo();
+		tempo.setBpm(120);
+		tempoTrack.insertEvent(ts);
+		tempoTrack.insertEvent(tempo);
 		
 		for (int i=0; i< 17; i++) {
 			int dice1 = myRandom.nextInt(5) + 1;
@@ -105,20 +102,11 @@ public class MidiJob {
 			else {m = m16;}
 			
 			// 3. Track 1 will contain all the notes from the merged files
-			System.err.println("DICE 1: " + dice1);
-			System.err.println("DICE 2: " + dice2);
-			System.err.println("DICE SUM: " + dice_sum);
 			System.err.println("MIDI File to open: " + m[dice_sum]);
-			try {
-				LoadFromAltLoc tmp_obj = new LoadFromAltLoc();
-				mf = new MidiFile(tmp_obj.LoadFile(context, m[dice_sum]));
-			}
-			catch(IOException e) {
-				System.err.println("Error parsing MIDI file:");
-				e.printStackTrace();
-				return;
-			} 
 			
+			LoadFromAltLoc tmp_obj = new LoadFromAltLoc();
+			mf = new MidiFile(tmp_obj.LoadFile(context, m[dice_sum]));
+						
 			T = mf.getTracks().get(0);
 			Iterator<MidiEvent> it = T.getEvents().iterator();
 			while(it.hasNext()) {
@@ -148,27 +136,22 @@ public class MidiJob {
 			else {t = t16;}
 			
 			// 3. Track 1 will contain all the notes from the merged file			
-			try {
-				LoadFromAltLoc tmp_obj = new LoadFromAltLoc();
-				mf = new MidiFile(tmp_obj.LoadFile(context, t[dice1]));
-			}
-			catch(IOException e) {
-				System.err.println("Error parsing MIDI file:");
-				e.printStackTrace();
-				return;
-			} 
+			LoadFromAltLoc tmp_obj = new LoadFromAltLoc();
+			mf = new MidiFile(tmp_obj.LoadFile(context, t[dice1]));
 			
 			T = mf.getTracks().get(0);
 			Iterator<MidiEvent> it = T.getEvents().iterator();
 			while(it.hasNext()) {
-				MidiEvent E = it.next();		
-				noteTrack.insertEvent(E);
+				MidiEvent E = it.next();
+				if(E.getClass().equals(NoteOn.class) || E.getClass().equals(NoteOff.class)) {
+					noteTrack.insertEvent(E);
+				}
 			}
 		}		
 		
 		// 4. Create a MidiFile with the tracks we created
 		ArrayList<MidiTrack> out_tracks = new ArrayList<MidiTrack>();
-		//out_tracks.add(tempoTrack);
+		out_tracks.add(tempoTrack);
 		out_tracks.add(noteTrack);
 		
 		//MidiFile out_file = new MidiFile(MidiFile.DEFAULT_RESOLUTION, out_tracks);
@@ -178,66 +161,27 @@ public class MidiJob {
 		// 5. Write the MIDI data to a file
 		//FileOutputStream fout = new FileOutputStream(outFile);
 
-		// Use a copy of the MIDI library's .writeToFile because it takes
+		// Use a copy of the MIDI library's writeToFile() method because it takes
 		// a full path and file name as argument which we don't have in Android
 		FileOutputStream fos;
-		int mType = 0;
+		int mType = 1;
 		int mTrackCount = out_tracks.size();
 		int mResolution = 480;
 		byte[] IDENTIFIER = { 'M', 'T', 'h', 'd' };
 		
-		try {
-			fos = context.openFileOutput(waltz, Context.MODE_PRIVATE);
-			try {
-				fos.write(IDENTIFIER);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				fos.write(MidiUtil.intToBytes(6, 4));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				fos.write(MidiUtil.intToBytes(mType, 2));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				fos.write(MidiUtil.intToBytes(mTrackCount, 2));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				fos.write(MidiUtil.intToBytes(mResolution, 2));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		fos = context.openFileOutput(waltz, Context.MODE_PRIVATE);
+		fos.write(IDENTIFIER);
+		fos.write(MidiUtil.intToBytes(6, 4));
+		fos.write(MidiUtil.intToBytes(mType, 2));
+		fos.write(MidiUtil.intToBytes(mTrackCount, 2));
+		fos.write(MidiUtil.intToBytes(mResolution, 2));
 			
-			for(MidiTrack T1 : out_tracks) {
-				try {
-					T1.writeToFile(fos);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			
-			try {
-				fos.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				fos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		for(MidiTrack T1 : out_tracks) {
+			T1.writeToFile(fos);
 		}
-		
-		
+			
+		fos.flush();
+		fos.close();
 	
 		//
 		

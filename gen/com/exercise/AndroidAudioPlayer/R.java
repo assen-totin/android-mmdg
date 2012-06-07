@@ -295,10 +295,11 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f050001;
-        public static final int dice_roll=0x7f050004;
-        public static final int dice_rolled=0x7f050005;
+        /**  <string name="play">- PLAY- </string>
+    <string name="pause">- PAUSE- </string> 
+         */
+        public static final int dice_roll=0x7f050002;
+        public static final int dice_rolled=0x7f050003;
         public static final int hello=0x7f050000;
-        public static final int pause=0x7f050003;
-        public static final int play=0x7f050002;
     }
 }

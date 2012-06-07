@@ -1,6 +1,7 @@
 package com.exercise.AndroidAudioPlayer;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import android.app.Activity;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 public class AndroidAudioPlayer extends Activity {
 	private MediaPlayer mediaPlayer = new MediaPlayer();
 	private final String MIDI_FILE_NAME = new String("waltz.mid");
+	Button buttonDiceRoll;
 	
     /** Called when the activity is first created. */
     @Override
@@ -20,18 +22,26 @@ public class AndroidAudioPlayer extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        Button buttonDiceRoll = (Button)findViewById(R.id.dice_roll);
+        buttonDiceRoll = (Button)findViewById(R.id.dice_roll);
         buttonDiceRoll.setOnClickListener(buttonDiceRollClickListener);   
     }
 
     Button.OnClickListener buttonDiceRollClickListener = new Button.OnClickListener(){
-    	public void onClick(View v) {    		
+    	public void onClick(View v)  {    		
     		MidiJob tmp_obj = new MidiJob();
-    		tmp_obj.allJobs(AndroidAudioPlayer.this, MIDI_FILE_NAME);
+    		try {
+				tmp_obj.allJobs(AndroidAudioPlayer.this, MIDI_FILE_NAME);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
    			
             Toast.makeText(AndroidAudioPlayer.this, R.string.dice_rolled, Toast.LENGTH_LONG).show();
                       
             mediaPlayer.reset();
+            
+            buttonDiceRoll.setEnabled(false);
             
             try {
             	FileInputStream fis = openFileInput(MIDI_FILE_NAME);
@@ -55,6 +65,8 @@ public class AndroidAudioPlayer extends Activity {
 			}
             
             mediaPlayer.start();
+            
+            buttonDiceRoll.setEnabled(true);
     	}
     };
 
