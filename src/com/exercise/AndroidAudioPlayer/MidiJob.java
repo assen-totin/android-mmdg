@@ -102,8 +102,6 @@ public class MidiJob {
 			else {m = m16;}
 			
 			// 3. Track 1 will contain all the notes from the merged files
-			System.err.println("MIDI File to open: " + m[dice_sum]);
-			
 			LoadFromAltLoc tmp_obj = new LoadFromAltLoc();
 			mf = new MidiFile(tmp_obj.LoadFile(context, m[dice_sum]));
 						
