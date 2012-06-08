@@ -108,8 +108,10 @@ public class MidiJob {
 			T = mf.getTracks().get(0);
 			Iterator<MidiEvent> it = T.getEvents().iterator();
 			while(it.hasNext()) {
-				MidiEvent E = it.next();		
-				noteTrack.insertEvent(E);
+				MidiEvent E = it.next();
+				if(E.getClass().equals(NoteOn.class) || E.getClass().equals(NoteOff.class)) {
+					noteTrack.insertEvent(E);
+				}
 			}
 		}
 		
