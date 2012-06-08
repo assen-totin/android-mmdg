@@ -295,9 +295,6 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f050001;
-        /**  <string name="play">- PLAY- </string>
-    <string name="pause">- PAUSE- </string> 
-         */
         public static final int dice_roll=0x7f050002;
         public static final int dice_rolled=0x7f050003;
         public static final int hello=0x7f050000;

@@ -48,7 +48,7 @@ public class AndroidAudioPlayer extends Activity {
         		buttonDiceRoll.setEnabled(true);
             	}           
             });
-            
+                                   
             try {
             	FileInputStream fis = openFileInput(MIDI_FILE_NAME);
 				mediaPlayer.setDataSource(fis.getFD());
