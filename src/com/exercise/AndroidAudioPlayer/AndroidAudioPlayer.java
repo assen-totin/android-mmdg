@@ -25,7 +25,7 @@ public class AndroidAudioPlayer extends Activity {
         buttonDiceRoll = (Button)findViewById(R.id.dice_roll);
         buttonDiceRoll.setOnClickListener(buttonDiceRollClickListener);   
     }
-
+   
     Button.OnClickListener buttonDiceRollClickListener = new Button.OnClickListener(){
     	public void onClick(View v)  {    		
     		MidiJob tmp_obj = new MidiJob();
@@ -42,6 +42,12 @@ public class AndroidAudioPlayer extends Activity {
             mediaPlayer.reset();
             
             buttonDiceRoll.setEnabled(false);
+            
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {           
+            	public void onCompletion(MediaPlayer mediaPlayer) {
+        		buttonDiceRoll.setEnabled(true);
+            	}           
+            });
             
             try {
             	FileInputStream fis = openFileInput(MIDI_FILE_NAME);
@@ -65,8 +71,6 @@ public class AndroidAudioPlayer extends Activity {
 			}
             
             mediaPlayer.start();
-            
-            buttonDiceRoll.setEnabled(true);
     	}
     };
 
