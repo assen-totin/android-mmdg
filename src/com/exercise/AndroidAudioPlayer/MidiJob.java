@@ -161,13 +161,6 @@ public class MidiJob {
 		out_tracks.add(tempoTrack);
 		out_tracks.add(noteTrack);
 		
-		//MidiFile out_file = new MidiFile(MidiFile.DEFAULT_RESOLUTION, out_tracks);
-		// This should be default for single track:
-		//out_file.setType(0);
-		
-		// 5. Write the MIDI data to a file
-		//FileOutputStream fout = new FileOutputStream(outFile);
-
 		// Use a copy of the MIDI library's writeToFile() method because it takes
 		// a full path and file name as argument which we don't have in Android
 		FileOutputStream fos;
@@ -189,15 +182,5 @@ public class MidiJob {
 			
 		fos.flush();
 		fos.close();
-		
-		//File output = new File(waltz);
-		//try {
-		//	out_file.writeToFile(output);
-		//} 
-		//catch(IOException e) {
-		//	System.err.println(e);
-		//}
-
 	}
-
 }
