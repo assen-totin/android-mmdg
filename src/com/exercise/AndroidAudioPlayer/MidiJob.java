@@ -16,6 +16,7 @@ import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
 import com.leff.midi.util.MidiUtil;
+import com.leff.midi.event.meta.EndOfTrack;
 import com.leff.midi.event.meta.Tempo;
 import com.leff.midi.event.meta.TimeSignature;
 
@@ -65,6 +66,7 @@ public class MidiJob {
 		String t[];
 		MidiFile mf;
 		MidiTrack T;
+		long offset=0, offset_tmp=0;
 
 		// 1. Create some MidiTracks
 		MidiTrack tempoTrack = new MidiTrack();
@@ -79,7 +81,7 @@ public class MidiJob {
 		tempoTrack.insertEvent(ts);
 		tempoTrack.insertEvent(tempo);
 		
-		for (int i=0; i< 17; i++) {
+		for (int i=1; i<17; i++) {
 			int dice1 = myRandom.nextInt(5) + 1;
 			int dice2 = myRandom.nextInt(5) + 1;
 			int dice_sum = dice1 + dice2;
@@ -100,7 +102,7 @@ public class MidiJob {
 			else if (i == 14) {m = m14;}
 			else if (i == 15) {m = m15;}
 			else {m = m16;}
-			
+
 			// 3. Track 1 will contain all the notes from the merged files
 			LoadFromAltLoc tmp_obj = new LoadFromAltLoc();
 			mf = new MidiFile(tmp_obj.LoadFile(context, m[dice_sum]));
@@ -109,13 +111,16 @@ public class MidiJob {
 			Iterator<MidiEvent> it = T.getEvents().iterator();
 			while(it.hasNext()) {
 				MidiEvent E = it.next();
+				offset_tmp = E.getTick();
 				if(E.getClass().equals(NoteOn.class) || E.getClass().equals(NoteOff.class)) {
-					noteTrack.insertEvent(E);
+					E.setTick(E.getTick() + offset);
+					noteTrack.appendEvent(E);
 				}
 			}
+			offset += offset_tmp;
 		}
-		
-		for (int i=0; i<17; i++) {
+
+		for (int i=1; i<17; i++) {
 			int dice1 = myRandom.nextInt(5) + 1;
 						
 			if (i == 1) {t = t1;}
@@ -143,11 +148,14 @@ public class MidiJob {
 			Iterator<MidiEvent> it = T.getEvents().iterator();
 			while(it.hasNext()) {
 				MidiEvent E = it.next();
+				offset_tmp = E.getTick();
 				if(E.getClass().equals(NoteOn.class) || E.getClass().equals(NoteOff.class)) {
-					noteTrack.insertEvent(E);
+					E.setTick(E.getTick() + offset);
+					noteTrack.appendEvent(E);
 				}
 			}
-		}		
+			offset += offset_tmp;
+		} 
 		
 		// 4. Create a MidiFile with the tracks we created
 		ArrayList<MidiTrack> out_tracks = new ArrayList<MidiTrack>();
@@ -182,8 +190,6 @@ public class MidiJob {
 			
 		fos.flush();
 		fos.close();
-	
-		//
 		
 		//File output = new File(waltz);
 		//try {
