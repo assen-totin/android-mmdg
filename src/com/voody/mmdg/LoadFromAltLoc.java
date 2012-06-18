@@ -1,13 +1,11 @@
 package com.voody.mmdg;
 
-//import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-//import android.os.Bundle;
 
 public class LoadFromAltLoc extends Activity {
 	//a handle to the application's resources

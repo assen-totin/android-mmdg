@@ -10,14 +10,14 @@ import java.util.Random;
 
 import android.content.Context;
 
-import com.leff.midi.MidiFile;
-import com.leff.midi.MidiTrack;
-import com.leff.midi.event.MidiEvent;
-import com.leff.midi.event.NoteOff;
-import com.leff.midi.event.NoteOn;
-import com.leff.midi.util.MidiUtil;
-import com.leff.midi.event.meta.Tempo;
-import com.leff.midi.event.meta.TimeSignature;
+import com.voody.midilib.MidiFile;
+import com.voody.midilib.MidiTrack;
+import com.voody.midilib.event.MidiEvent;
+import com.voody.midilib.event.NoteOff;
+import com.voody.midilib.event.NoteOn;
+import com.voody.midilib.util.MidiUtil;
+import com.voody.midilib.event.meta.Tempo;
+import com.voody.midilib.event.meta.TimeSignature;
 
 public class MidiJob {
 	Context context;
