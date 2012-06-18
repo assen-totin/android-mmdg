@@ -1,4 +1,4 @@
-package com.exercise.AndroidAudioPlayer;
+package com.voody.mmdg;
 
 //import java.io.ByteArrayOutputStream;
 import java.io.IOException;

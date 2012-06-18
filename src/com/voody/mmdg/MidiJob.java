@@ -1,4 +1,4 @@
-package com.exercise.AndroidAudioPlayer;
+package com.voody.mmdg;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

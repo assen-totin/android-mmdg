@@ -1,8 +1,10 @@
-package com.exercise.AndroidAudioPlayer;
+package com.voody.mmdg;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import com.exercise.AndroidAudioPlayer.R;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
