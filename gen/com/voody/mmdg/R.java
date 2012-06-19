@@ -8,13 +8,34 @@
 package com.voody.mmdg;
 
 public final class R {
+    public static final class array {
+        public static final int combine_interval_entries=0x7f050004;
+        public static final int combine_interval_values=0x7f050005;
+        public static final int key_signature_entries=0x7f050002;
+        public static final int key_signature_values=0x7f050003;
+        public static final int show_note_letter_entries=0x7f050006;
+        public static final int show_note_letter_values=0x7f050007;
+        public static final int transpose_entries=0x7f050000;
+        public static final int transpose_values=0x7f050001;
+    }
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int bass=0x7f020000;
+        public static final int eight=0x7f020001;
+        public static final int four=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int icon=0x7f020004;
+        public static final int nine=0x7f020005;
+        public static final int notepair=0x7f020006;
+        public static final int six=0x7f020007;
+        public static final int three=0x7f020008;
+        public static final int treble=0x7f020009;
+        public static final int twelve=0x7f02000a;
+        public static final int two=0x7f02000b;
     }
     public static final class id {
-        public static final int dice_roll=0x7f060000;
+        public static final int dice_roll=0x7f070000;
     }
     public static final class layout {
         public static final int main=0x7f030000;
@@ -292,11 +313,12 @@ public final class R {
         public static final int t94=0x7f04010d;
         public static final int t95=0x7f04010e;
         public static final int t96=0x7f04010f;
+        public static final int waltz=0x7f040110;
     }
     public static final class string {
-        public static final int app_name=0x7f050001;
-        public static final int dice_roll=0x7f050002;
-        public static final int dice_rolled=0x7f050003;
-        public static final int hello=0x7f050000;
+        public static final int app_name=0x7f060000;
+        public static final int dice_roll=0x7f060002;
+        public static final int dice_rolled=0x7f060003;
+        public static final int hello=0x7f060001;
     }
 }
