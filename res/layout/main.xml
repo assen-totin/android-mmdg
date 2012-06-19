@@ -17,18 +17,5 @@ android:layout_width="fill_parent"
 android:layout_height="wrap_content"
 android:text="@string/dice_roll"
 />
-<!-- 
-<Button
-android:id="@+id/play"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:text="@string/play"
-/>
-<Button
-android:id="@+id/pause"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:text="@string/pause"
-/>
- -->
+
 </LinearLayout>

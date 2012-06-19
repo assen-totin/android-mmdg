@@ -1,5 +1,6 @@
 package com.voody.mmdg;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -59,7 +60,7 @@ public class MidiJob {
 	/**
 	 * @param args
 	 */
-	public void allJobs(Context context, String waltz) throws IOException, FileNotFoundException {
+	public byte[] allJobs(Context context, String waltz) throws IOException, FileNotFoundException {
 		Random myRandom = new Random();
 		String m[];
 		String t[];
@@ -182,5 +183,16 @@ public class MidiJob {
 			
 		fos.flush();
 		fos.close();
+		
+		// Write to byte adraye, return it
+        byte[] data = null;
+        FileInputStream fis = context.openFileInput(waltz);
+        try {
+        	data = new byte[fis.available()];
+        	fis.read(data);
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
+		return data;
 	}
 }

@@ -5,11 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+//import android.widget.Toast;
+
+import com.voody.midisheet.SheetMusicEntryPoint;
 
 public class AndroidAudioPlayer extends Activity {
 	private MediaPlayer mediaPlayer = new MediaPlayer();
@@ -27,17 +30,19 @@ public class AndroidAudioPlayer extends Activity {
     }
    
     Button.OnClickListener buttonDiceRollClickListener = new Button.OnClickListener(){
-    	public void onClick(View v)  {    		
+    	public void onClick(View view)  {    		
     		MidiJob tmp_obj = new MidiJob();
+    		byte[] data = null;
     		try {
-				tmp_obj.allJobs(AndroidAudioPlayer.this, MIDI_FILE_NAME);
+				data = tmp_obj.allJobs(AndroidAudioPlayer.this, MIDI_FILE_NAME);
+				
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-   			
-            Toast.makeText(AndroidAudioPlayer.this, R.string.dice_rolled, Toast.LENGTH_LONG).show();
+    		
+            //Toast.makeText(AndroidAudioPlayer.this, R.string.dice_rolled, Toast.LENGTH_LONG).show();
                       
             mediaPlayer.reset();
             
@@ -71,6 +76,12 @@ public class AndroidAudioPlayer extends Activity {
 			}
             
             mediaPlayer.start();
+            
+            Bundle sendBundle = new Bundle();
+            sendBundle.putByteArray("data", data);
+            Intent intent = new Intent(AndroidAudioPlayer.this, SheetMusicEntryPoint.class);
+            intent.putExtras(sendBundle);
+            startActivity(intent); 
     	}
     };
 
