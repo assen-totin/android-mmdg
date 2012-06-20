@@ -5,7 +5,4 @@
     <string name="app_name">MMDG</string>
     <string name="dice_roll">ROLL THEM DICE!</string>
     <string name="dice_rolled">Rolled the dice!</string>
-
-    <!-- <string name="play">- PLAY- </string> 
-    <string name="pause">- PAUSE- </string> -->
 </resources>

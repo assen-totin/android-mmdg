@@ -22,11 +22,12 @@ android:text="@string/dice_roll"
 android:textColor="#000000"
 />
 
-
+<!-- 
 <com.voody.mmdg.CustomView
     android:id="@+id/sheet_music"
     android:background="#ffffff"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" />
+-->	
 	
 </LinearLayout>
