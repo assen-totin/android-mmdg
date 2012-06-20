@@ -79,12 +79,16 @@ public class AndroidAudioPlayer extends Activity {
 				e.printStackTrace();
 			}
             
+            System.err.println("Before mediaPlayer.start()");
             mediaPlayer.start();
+            System.err.println("After mediaPlayer.start()");
+            
             
             sendBundle.putByteArray("data", data);
             Intent intent = new Intent(AndroidAudioPlayer.this, SheetMusicEntryPoint.class);
             intent.putExtras(sendBundle);
-            startActivity(intent); 
+            startActivity(intent);
+             
     	}
     };
 
