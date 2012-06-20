@@ -18,6 +18,7 @@ public class AndroidAudioPlayer extends Activity {
 	private MediaPlayer mediaPlayer = new MediaPlayer();
 	private final String MIDI_FILE_NAME = new String("waltz.mid");
 	Button buttonDiceRoll;
+	Bundle sendBundle = new Bundle();
 	
     /** Called when the activity is first created. */
     @Override
@@ -25,10 +26,13 @@ public class AndroidAudioPlayer extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        //CustomView customView = (CustomView) findViewById(R.id.sheet_music);
+        //sendBundle.putExtra("customView", customView);
+        
         buttonDiceRoll = (Button)findViewById(R.id.dice_roll);
         buttonDiceRoll.setOnClickListener(buttonDiceRollClickListener);   
     }
-   
+    
     Button.OnClickListener buttonDiceRollClickListener = new Button.OnClickListener(){
     	public void onClick(View view)  {    		
     		MidiJob tmp_obj = new MidiJob();
@@ -77,7 +81,6 @@ public class AndroidAudioPlayer extends Activity {
             
             mediaPlayer.start();
             
-            Bundle sendBundle = new Bundle();
             sendBundle.putByteArray("data", data);
             Intent intent = new Intent(AndroidAudioPlayer.this, SheetMusicEntryPoint.class);
             intent.putExtras(sendBundle);
