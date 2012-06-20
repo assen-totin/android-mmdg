@@ -20,7 +20,7 @@ public class LoadFromAltLoc extends Activity {
 		InputStream iS;
 
 		// Get the resource id from the file name
-		int rID = resources.getIdentifier("com.exercise.AndroidAudioPlayer:raw/"+fileName, null, null);
+		int rID = resources.getIdentifier(context.getPackageName()+":raw/"+fileName, null, null);
 
 		// Get the file as a stream
 		iS = resources.openRawResource(rID);
