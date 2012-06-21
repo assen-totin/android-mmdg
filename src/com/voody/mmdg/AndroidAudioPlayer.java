@@ -20,7 +20,6 @@ public class AndroidAudioPlayer extends Activity {
 	Button buttonDiceRoll;
 	Bundle sendBundle = new Bundle();
 	
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,11 +75,8 @@ public class AndroidAudioPlayer extends Activity {
 	        mediaPlayer.start();
 	        	            
 	        sendBundle.putByteArray("data", data);
-	        //Intent intent = new Intent(AndroidAudioPlayer.this, SheetMusicEntryPoint.class);
 	        Intent intent = new Intent(view.getContext(), SheetMusicEntryPoint.class);
-	        //Intent intent = new Intent(view.getContext(), TestActivity.class);
 	        intent.putExtras(sendBundle);
-	        //startActivityForResult(intent, 0);
 	        startActivity(intent);
        	}
     };
