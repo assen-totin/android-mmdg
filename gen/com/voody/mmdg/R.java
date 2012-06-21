@@ -35,8 +35,9 @@ public final class R {
         public static final int two=0x7f02000b;
     }
     public static final class id {
-        public static final int dice_roll=0x7f070001;
+        public static final int dice_roll=0x7f070002;
         public static final int relative_layout=0x7f070000;
+        public static final int text_view=0x7f070001;
     }
     public static final class layout {
         public static final int main=0x7f030000;
