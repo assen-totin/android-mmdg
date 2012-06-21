@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 
@@ -72,13 +73,23 @@ public class AndroidAudioPlayer extends Activity {
 				e.printStackTrace();
 			}
 	           
-	        mediaPlayer.start();
-	        	            
+	        //mediaPlayer.start();
+	        
+	        Handler timer = new Handler();
+	        timer.postDelayed(callMediaPlayer, 5000);
+	        
 	        sendBundle.putByteArray("data", data);
 	        Intent intent = new Intent(view.getContext(), SheetMusicEntryPoint.class);
 	        intent.putExtras(sendBundle);
 	        startActivity(intent);
        	}
     };
+    
+    Runnable callMediaPlayer = new Runnable() {
+        public void run() {
+        	mediaPlayer.start();
+        }
+    };
+ 
 }
 
