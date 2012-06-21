@@ -57,9 +57,7 @@ public class MidiJob {
 	static String t15[] = {"t0", "t19", "t47", "t9", "t33", "t5", "t78"};
 	static String t16[] = {"t0", "t66", "t88", "t21", "t1", "t91", "t31"};
 	
-	/**
-	 * @param args
-	 */
+
 	public byte[] allJobs(Context context, String waltz) throws IOException, FileNotFoundException {
 		Random myRandom = new Random();
 		String m[];
@@ -196,3 +194,4 @@ public class MidiJob {
 		return data;
 	}
 }
+
