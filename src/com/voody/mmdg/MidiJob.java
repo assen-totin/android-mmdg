@@ -77,7 +77,9 @@ public class MidiJob {
 		// Waltz is in 3/4!
 		ts.setTimeSignature(3, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
 		Tempo tempo = new Tempo();
-		tempo.setBpm(120);
+		//tempo.setBpm(120);
+		// The tempo as Mozart saw it is 100 bpm
+		tempo.setBpm(100);
 		tempoTrack.insertEvent(ts);
 		tempoTrack.insertEvent(tempo);
 		
