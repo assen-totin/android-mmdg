@@ -73,7 +73,9 @@ public class MidiJob {
 		// 2. Add events to the tracks. 
 		// Track 0 is typically the tempo map
 		TimeSignature ts = new TimeSignature();
-		ts.setTimeSignature(4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
+		//ts.setTimeSignature(4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
+		// Waltz is in 3/4!
+		ts.setTimeSignature(3, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
 		Tempo tempo = new Tempo();
 		tempo.setBpm(120);
 		tempoTrack.insertEvent(ts);
