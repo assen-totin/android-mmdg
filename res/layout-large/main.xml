@@ -10,6 +10,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
+    android:paddingTop="@dimen/DIM10"
     android:text="@string/hello"
     android:textColor="#FF0000"
     android:textSize="14pt"
@@ -20,6 +21,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
+    android:paddingTop="@dimen/DIM10"
     android:text="@string/hello2"
     android:textColor="#000000"
     android:textSize="12pt"
@@ -30,10 +32,11 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
+    android:paddingBottom="@dimen/DIM10"
+    android:paddingTop="@dimen/DIM10"
     android:text="@string/hello3"
     android:textColor="#000000"
-    android:textSize="10pt" 
-    />
+    android:textSize="10pt" />
 
 <Button
     android:id="@+id/dice_roll"
